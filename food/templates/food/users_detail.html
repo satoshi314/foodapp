@@ -1,0 +1,7 @@
+<h2 class="user-name">@{{ user.username }}</h2>
+
+{% for shop in shops %}
+<a href="{% url 'app:shops_detail' shop.id %}">
+    <img src="{{ shop.photo.url }}" class="shop-photo">
+</a>
+{% endfor %}

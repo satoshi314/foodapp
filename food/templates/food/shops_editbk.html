@@ -1,0 +1,50 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+
+<div>
+    <a href="{% url 'app:index' %}">ホームに戻る</a>
+</div>
+
+	<form action="{% url 'app:shops_edt' %}" method="POST" enctype="multipart/form-data">{% csrf_token %}
+	<button type="submit" class="btn">検索</button>
+    <table>
+        <tr>
+            <th>店名</th>
+            <td>{{ form.name }}</td>
+        </tr>
+        <tr>
+            <th>評価</th>
+            <td>{{ form.evaluate }}</td>
+        </tr>
+        <tr>
+            <th>駅</th>
+            <td>{{ form.station }}</td>
+        </tr>
+        <tr>
+            <th>ジャンル</th>
+            <td>{{ form.genre }}</td>
+        </tr>
+        <tr>
+            <th>URL</th>
+            <td>{{ form.url }}</td>
+        </tr>        
+        <tr>
+            <th>写真</th>
+            <td>{{ form.photo }}</td>
+        </tr>
+        <tr>
+            <th>状態</th>
+            <td>{{ form.state }}</td>
+        </tr>
+        <tr>
+            <th>コメント</th>
+            <td>{{ form.comment }}</td>
+        </tr>        
+    </table>
+    {{form.coordinate.as_hidden}}
+    {{form.user.as_hidden}}
+    <button type="submit" class="btn">保存</button>
+</form>
+
+{% endblock %}

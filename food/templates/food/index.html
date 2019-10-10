@@ -1,0 +1,28 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block content %}
+
+<h2>マイリスト</h2>
+<link rel="stylesheet" type="text/css" href="{% static 'app/css/style2019100501.css' %}">
+{% comment %} <link rel="stylesheet" type="text/css" href="app/static/app/css/style.css"> {% endcomment %}
+{% for shop in shops %}
+<div class="item">
+    <a href="{% url 'app:shops_detail' shop.id %}">
+    <p><img src="{{shop.state.symbol}}" width="20" height="20" class="shop-photo"> 
+    <span class = "item-title">
+    {{shop.evaluate}} &emsp;  {{shop.name}}</p></a>
+    </span>
+    {% comment %} <p>{{shop.evaluate}}</p> {% endcomment %}
+    <p>{{shop.station}}</p>
+    <p>{{shop.genre}}</p>    
+    <p>{{shop.comment}}</p>
+    {% comment %} {% if shop.photo  %}
+    <img src="{{ shop.photo.url }}"  width="193" height="130" class="shop-photo">
+    {% else %}
+    <img src="/static/photos/no_image.png"  width="193" height="130" class="shop-photo">    
+    {% endif %} {% endcomment %}
+    {% comment %} <img src="data:image/jpeg;base64,{{shop.photo_binary}}}  width="193" height="130" class="shop-photo">     {% endcomment %}
+</div>
+{% endfor %}
+
+{% endblock %}

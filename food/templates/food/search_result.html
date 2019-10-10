@@ -1,0 +1,24 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+
+<h2>検索結果</h2>
+<form action="{% url 'app:map_output' %}" method="GET" target="_blank"　enctype="multipart/form-data">{% csrf_token %}
+<button><a class="btn" >検索結果をマップに出力</a></button> 
+
+</form>
+{% for shop in shops %}
+
+<a href="{% url 'app:shops_detail' shop.id %}">
+    <p>{{shop.name}}</p>
+    <p>{{shop.evaluate}}</p>
+    <p>{{shop.genre}}</p>
+    <p>{{shop.comment}}</p>
+    {% comment %} {% if shop.photo  %}
+    <img src="{{ shop.photo.url }}"  width="193" height="130" class="shop-photo">
+    {% else %}
+    <img src="/media/photos/no_image.png"  width="193" height="130" class="shop-photo">    
+    {% endif %} {% endcomment %}
+{% endfor %}
+
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+
+<div>
+    <a href="{% url 'app:index' %}">ホームに戻る</a>
+</div>
+
+
+
+
+    <form action="{% url 'app:shops_search' %}" method="get">
+        <label>URL<input type="text" size="100" name="search_url"></label>
+        <input type="submit" value="検索">
+    </form>
+{% endblock %}

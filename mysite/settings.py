@@ -23,10 +23,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'es!rkfijpm#5zy(&zo#gw-a6d@qly7*mp_3$@+1d!497b#ufd5'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = True   #下の方にもあるがどっちが優先？
 
-ALLOWED_HOSTS = []
 
+# ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -37,11 +38,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-     'food.apps.FoodConfig',
+    'food.apps.FoodConfig',   #アプリを追加 girlsによるとこの方法   
+    'food' #アプリを追加
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware', #SecurityMiddleware'より後ろ、その他のミドルウェアよりは前の位置に記述
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -49,6 +52,10 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+
+#セッション情報をキャッシュに保存する
+SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
 
 ROOT_URLCONF = 'mysite.urls'
 
@@ -104,9 +111,11 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+# LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ja'
 
-TIME_ZONE = 'UTC'
+# TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Tokyo'
 
 USE_I18N = True
 
@@ -117,5 +126,41 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
-
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
+
+# STATICFILES_DIRS = (
+#     os.path.join(BASE_DIR, 'app/static'),
+# )
+
+
+#whitenoise用の設定　http://furodrive.com/2016/01/white_noisedjango/
+
+# 'よくわからないが追加'
+STATICFILES_FINDERS = (
+    #settings.STATICFILES_DIRSに設定されたディレクトリから静的ファイルを検索する。
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    #アプリケーション毎のstaticという名称のディレクトリを検索する。
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+)
+
+#最新版はこれ⇒指定していたときOKだった
+STATICFILES_STORAGE ='whitenoise.storage.CompressedManifestStaticFilesStorage' 
+
+
+LOGIN_URL = 'app:login'
+LOGIN_REDIRECT_URL = 'app:index'
+LOGOUT_REDIRECT_URL = 'app:index'
+
+
+DEBUG = False
+# DEBUG = True
+try:
+    from .local_settings import *
+except ImportError:
+    pass
+
+if not DEBUG:
+    import django_heroku
+    django_heroku.settings(locals())
+

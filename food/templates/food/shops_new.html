@@ -1,0 +1,72 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+
+<div>
+    <a href="{% url 'app:index' %}">ホームに戻る</a>
+</div>
+
+	<form action="{% url 'app:shops_new' %}" method="POST" enctype="multipart/form-data">{% csrf_token %}
+    <table>
+        <tr>
+            <th>店名</th>
+            <td>{{ form.name }}</td>
+        </tr>
+        <tr>
+            <th>ジャンル</th>
+            <td>{{ form.genre }}</td>
+        </tr>
+        <tr>
+            <th>評価</th>
+            <td>{{ form.evaluate }}</td>
+        </tr>
+        <tr>
+            <th>口コミ数</th>
+            <td>{{ form.kuchikomi }}</td>
+        </tr>
+
+        <tr>
+            <th>駅</th>
+            <td>{{ form.station }}</td>
+        </tr>
+        <tr>
+            <th>昼予算</th>
+            <td>{{ form.lunch_bud }}</td>
+        </tr>
+        <tr>
+            <th>夜予算</th>
+            <td>{{ form.dinner_bud }}</td>
+        </tr>
+        <tr>
+            <th>定休日</th>
+            <td>{{ form.teikyu }}</td>
+        </tr>
+
+        <tr>
+            <th>URL</th>
+            <td>{{ form.url }}</td>
+        </tr>        
+        {% comment %} <tr>
+            <th>写真</th>
+            <td>{{ form.photo }}</td>
+        </tr> {% endcomment %}
+        {% comment %} <tr>
+            <th>写真</th>
+            <td><input type="file" name="pic"></td>
+        </tr> {% endcomment %}
+
+        <tr>
+            <th>状態</th>
+            <td>{{ form.state }}</td>
+        </tr>
+        <tr>
+            <th>コメント</th>
+            <td>{{ form.comment }}</td>
+        </tr>        
+    </table>
+    {{form.coordinate.as_hidden}}
+    {{form.user.as_hidden}}
+    <button type="submit" class="btn">保存</button>
+</form>
+
+{% endblock %}

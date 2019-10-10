@@ -1,0 +1,29 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+
+<div>
+    <a href="{% url 'app:index' %}">ホームに戻る</a>
+</div>
+
+
+
+
+    <form action="{% url 'app:mylist_search' %}" method="GET" enctype="multipart/form-data">{% csrf_token %}
+    <table>
+        <tr>
+            <th>店名</th>
+            <td>{{ form.name }}</td>
+        </tr>    
+        <tr>
+            <th>駅</th>
+            <td>{{ form.station }}</td>
+        </tr>
+        <tr>
+            <th>ジャンル</th>
+            <td>{{ form.genre }}</td>
+        </tr>        
+    </table>        
+    <input type="submit" value="検索">
+    </form>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+
+<div class="shop-detail">
+
+<div class="shop-info">
+    
+</div>
+
+<h2><a href={{shop.url}}>{{ shop.name }}</a></h2>
+<p>評価　　:{{ shop.evaluate }}　(口コミ{{ shop.kuchikomi }}件)</p>
+<p>駅　　　:{{ shop.station }}</p>
+<p>ジャンル:{{ shop.genre }}</p>
+<p>定休日　:{{ shop.teikyu }}</p>
+<p>昼予算:{{ shop.lunch_bud }}</p>
+<p>夜予算:{{ shop.dinner_bud }}</p>
+<p>コメント:{{ shop.comment }}</p>
+{% comment %} {% if shop.photo  %}
+<img src="{{ shop.photo.url }}"  width="193" height="130" class="shop-photo">
+{% else %}
+<img src="/media/photos/no_image.png"  width="193" height="130" class="shop-photo">    
+{% endif %} {% endcomment %}
+
+<!-- 編集ボタン　-->
+<form  action="{% url 'app:shops_edit' shop.id %}">{% csrf_token %}
+<button><a class="btn" >編集</a></button>
+
+</form>
+<!-- 削除ボタン　-->
+<form method="post" action="{% url 'app:shops_delete' shop.id %}">{% csrf_token %}
+    <button class="btn" type="submit" onclick='return confirm("本当に削除しますか？");'>削除</button>
+</form>
+
+</div>
+{% endblock %}
+        
